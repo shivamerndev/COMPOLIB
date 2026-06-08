@@ -1,8 +1,8 @@
 import app from "./src/app.js"
-import connectDb from "./src/configs/db.config.js"
-import { PORT } from "./src/configs/env.config.js"
+import connectDb from "./src/config/db.config.js"
+import { PORT } from "./src/config/env.config.js"
 
 
-connectDb();
+await connectDb();
 
 app.listen(PORT, () => console.log(`Server Running On Port ${PORT}`))
