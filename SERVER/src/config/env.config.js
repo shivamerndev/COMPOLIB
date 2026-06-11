@@ -7,7 +7,8 @@ export const {
   JWT_SECRET,
   JWT_REFRESH_SECRET,
   GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET
+  GOOGLE_CLIENT_SECRET,
+  MISTRAL_API_KEY
 } = process.env
 
 const checkVariables = {
@@ -17,7 +18,8 @@ const checkVariables = {
   JWT_SECRET,
   JWT_REFRESH_SECRET,
   GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET
+  GOOGLE_CLIENT_SECRET,
+  MISTRAL_API_KEY
 }
 
 Object.entries(checkVariables).forEach(([key, value]) => {

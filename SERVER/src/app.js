@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import morgan from "morgan"
 import errorMiddleware from "./middlewares/error.middleware.js";
 import responseMiddleware from "./middlewares/response.middleware.js";
+import componentRouter from "./routes/component.route.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(responseMiddleware)
 
 
 app.use("/api/v1/auth", authRouter)
+app.use("/api/v1/component", componentRouter)
 
 
 app.use(errorMiddleware)

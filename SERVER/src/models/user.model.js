@@ -25,6 +25,15 @@ const userSchema = new mongoose.Schema(
             minlength: [8, "Password must be at least 6 characters long"],
             select: false, // default queries me password nahi aayega
         },
+        role: {
+            type: String,
+            enum: ["user", "admin"],
+            default: "user"
+        },
+        aiCredits: {
+            type: Number,
+            default: 1000
+        },
         googleId: {
             type: String,
             unique: true,
