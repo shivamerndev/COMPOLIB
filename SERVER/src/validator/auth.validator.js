@@ -5,12 +5,14 @@ function authValidator(userData) {
     const registerSchema = joi.object({
         fullName: joi.string().min(3).required().trim(),
         email: joi.string().email().required().lowercase(),
-        password: joi.string().required().min(8),
+        role: joi.string().required().valid("user", "admin").trim(),
+        googleId: joi.string().required().trim()
     })
 
     const loginSchema = joi.object({
         email: joi.string().email().required().lowercase(),
-        password: joi.string().required().min(8),
+        googleId: joi.string().required().trim(),
+        role: joi.string().required().valid("user", "admin").trim()
     })
 
     return { register: registerSchema.validate(userData), login: loginSchema.validate(userData) }
