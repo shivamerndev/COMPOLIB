@@ -6,6 +6,17 @@ import { verifyRefreshToken } from "../utils/token.utils.js";
 
 class AuthController {
 
+
+    googleAuth = asyncHandler(async (req, res) => {
+
+        const { idToken } = req.body;
+
+        let { accessToken, refreshToken, httpOnly } = await authService.googleService(idToken)
+        res.cookie("refresh_token", refreshToken, httpOnly)
+
+        res.success(200, "Authentication Successfully.", { token: accessToken })
+    })
+
     register = asyncHandler(async (req, res) => {
 
         const userData = req.body;

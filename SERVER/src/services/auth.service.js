@@ -1,11 +1,38 @@
 import MongoUserRepository from "../repository/implemention/mongo.user.js";
 import { AppError } from "../utils/error.utils.js";
 import { createHttpOnlyTokenCookie, generateAccessToken, generateRefreshToken } from "../utils/token.utils.js"
+import { OAuth2Client } from "google-auth-library";
+import { GOOGLE_CLIENT_ID } from "../config/env.config.js";
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 class AuthService {
 
     constructor() {
         this.userRepository = new MongoUserRepository();
+    }
+
+    async googleService(idToken) {
+
+        if (!idToken) throw new AppError(400, "Id Token Must be Provided.")
+
+        const ticket = await client.verifyIdToken({ idToken, audience: GOOGLE_CLIENT_ID });
+
+        const payload = ticket.getPayload();
+
+        const { name: fullName, email, sub: googleId } = payload;
+        
+        let user = await this.userRepository.findUserByEmail(email);
+        
+        if (!user) {
+            user = await this.userRepository.createUser({ fullName, email, googleId });
+        }
+
+        const accessToken = generateAccessToken(user._id)
+        const refreshToken = generateRefreshToken(user._id)
+        const httpOnly = createHttpOnlyTokenCookie()
+
+        return { accessToken, refreshToken, httpOnly }
     }
 
     async register(userData) {

@@ -17,18 +17,19 @@ const userSchema = new mongoose.Schema(
             lowercase: true,
             match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"],
         },
-        password: {
+        role: {
             type: String,
-            required: [function () {
-                return !this.googleId;
-            }, "Password is required"],
-            minlength: [8, "Password must be at least 6 characters long"],
-            select: false, // default queries me password nahi aayega
+            enum: ["user", "admin"],
+            default: "user"
+        },
+        aiCredits: {
+            type: Number,
+            default: 1000
         },
         googleId: {
             type: String,
             unique: true,
-            sparse: true, // null values ko ignore karega unique constraint me kyunki multiple users ke paas googleId nahi hoga but unique = true hai.
+            required: true
         }
     }, { timestamps: true }
 );
