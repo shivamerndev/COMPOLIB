@@ -1,6 +1,9 @@
 import { Sparkles, Grid3x3 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function StartBuildingUI() {
+  const router = useRouter();
+
   return (
     <div className="h-screen flex items-center justify-center px-4">
       {/* Main Container */}
@@ -28,7 +31,7 @@ export default function StartBuildingUI() {
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           {/* Primary Button */}
-          <button className="flex items-center justify-center gap-2 px-8 py-4 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl">
+          <button onClick={() => router.push("/generate")} className="flex items-center justify-center gap-2 px-8 py-4 bg-cyan-400 hover:bg-cyan-300 text-slate-900 font-semibold rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl">
             <Sparkles size={20} className="stroke-current" />
             Get Started Free
           </button>

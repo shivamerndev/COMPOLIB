@@ -21,9 +21,6 @@ class AuthService {
         const payload = ticket.getPayload();
 
         const { name: fullName, email, sub: googleId } = payload;
-
-        console.log(payload)
-        return;
         
         let user = await this.userRepository.findUserByEmail(email);
         

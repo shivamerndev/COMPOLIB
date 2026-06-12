@@ -1,12 +1,13 @@
 "use client"
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import StartBuildingUI from '@/components/StartBuilding';
 import CodeCard from '@/components/CodeCard';
 import ShowcaseCards from '@/components/ShowCaseCards';
 import StepsGuide from '@/components/StepGuide';
 import Hero from '@/components/Hero';
 import Navbar from '@/components/Navbar';
+
 
 export default function Home() {
 

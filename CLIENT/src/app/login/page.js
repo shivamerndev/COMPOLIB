@@ -3,22 +3,35 @@
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google"
 import FeatureCard from "@/components/FeatureCard";
 import { LogIn, Sparkles, Sliders, Blocks, Copy, LayoutTemplate } from "lucide-react";
-import axios from "axios"
+import useAuth from "@/hooks/useAuth";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Login = () => {
+  const router = useRouter();
+  const { handleGoogleAuth } = useAuth();
+  const { isAuthenticated, loading } = useSelector((state) => state.auth);
 
-  const googleAuth = async (credentials) => {
-    try {
-      let res = await axios.post("http://localhost:4000/api/v1/auth/google", {
-        idToken: credentials.credential
-      }, {
-        withCredentials: true
-      });
-
-      console.log(res.data);
-    } catch (error) {
-      console.error("Google Auth Error:", error?.response?.data || error.message);
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      router.push("/generate");
     }
+  }, [isAuthenticated, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-white">
+        <div className="relative flex flex-col items-center gap-4">
+          <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-400 rounded-full animate-spin"></div>
+          <p className="text-cyan-400 font-medium tracking-wide animate-pulse">Checking session...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isAuthenticated) {
+    return null;
   }
 
   return (
@@ -85,12 +98,7 @@ const Login = () => {
           </div>
 
           <GoogleOAuthProvider clientId="536825012398-1d35bc52gj5vgm01aiso2oeogo7dfcka.apps.googleusercontent.com">
-            <GoogleLogin onSuccess={(credentialResponse) => {
-              googleAuth(credentialResponse);
-            }}
-              onError={() => {
-                console.log('Login Failed');
-              }} />
+            <GoogleLogin onSuccess={(credentialResponse) => handleGoogleAuth(credentialResponse)} onError={() => console.log('Login Failed')} />
           </GoogleOAuthProvider>
 
           {/* Footer Note */}

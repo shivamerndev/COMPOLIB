@@ -67,11 +67,11 @@ const Hero = () => {
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center w-full max-w-md">
-                <button className="flex-1 sm:flex-none bg-white text-slate-900 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition flex items-center justify-center gap-2 group">
+                <button onClick={() => router.push("/generate")} className="flex-1 sm:flex-none bg-white text-slate-900 px-8 py-3 rounded-lg font-bold hover:bg-gray-100 transition flex items-center justify-center gap-2 group">
                     Get Started
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
                 </button>
-                <button onClick={()=>router.push("/generate")} className="flex-1 sm:flex-none border border-slate-600 hover:border-cyan-400 text-white px-8 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                <button onClick={() => router.push("/generate")} className="flex-1 sm:flex-none border border-slate-600 hover:border-cyan-400 text-white px-8 py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2">
                     <Zap className="w-4 h-4 text-cyan-400" />
                     Generate AI Component
                 </button>
